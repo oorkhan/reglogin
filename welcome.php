@@ -8,7 +8,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
     $user_id = $_SESSION['id'];
     //SELECT * FROM posts LEFT JOIN post_images ON posts.id = post_images.post_id
-    $sql = 'SELECT * FROM posts LEFT JOIN post_images ON (post_images.post_image_id = posts.id) WHERE user_id = :user_id ';
+    $sql = "SELECT posts.id,posts.deleted,posts.title,posts.body, GROUP_CONCAT(images.url SEPARATOR ', ')  AS 'images'  from posts left JOIN images on posts.id=images.post_id GROUP BY posts.id ASC";
+
     $stmt = $pdo->prepare($sql);
     $stmt->execute(['user_id' => $user_id]);
     $posts = $stmt->fetchAll();
@@ -26,17 +27,30 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <table id="post_table">
             <th>Title</th><th>Text</th><th>Buttons</th>
     <?php
-       foreach($posts as $post){
-           if($post['deleted'] == 0){
-                echo '
-                <tr><td>'.$post['title'].'</td><td>'.$post['body'].'</td><td>
-                <a id="'.$post['id'].'" class="waves-effect waves-light btn modal-trigger blue edit_data" href="#modal1">Edit</a> 
-                <a onclick="return confirm(\'Are you sure?\')" class="waves-effect waves-light btn red delete_btn" href="postDelete.php?id='.$post['id'].'">Delete</a></td></tr>
-                <tr><td colspan="3"><h5 style="text-align:center">'.$post['title'].' Images</h5><img style="width:100px" src="'.$post['url'].'" alt=""></td></tr>
-                ';
-           }
-        }
-    ?>
+    foreach($posts as $post){
+           if($post['deleted'] == 0){ ?>
+                <tr>
+                  <td><?= $post['title'] ?></td>
+                  <td><?= $post['body'] ?></td>
+                  <td>
+                    <a id="<?= $post['id'] ?>" class="waves-effect waves-light btn modal-trigger blue edit_data" href="#modal1">Edit</a>
+                    <a onclick="return confirm(\'Are you sure?\')" class="waves-effect waves-light btn red delete_btn" href="postDelete.php?id=<?= $post['id'] ?>">Delete</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <h5 style="text-align:center">
+                      <?= $post['title'] ?> Images
+                    </h5>
+                    <?php foreach(explode(', ',$post['images']) as $image): ?>
+                    <img style="width:100px" src="<?=$image?>" alt="">
+                    <?php endforeach; ?>
+                  </td>
+                </tr>
+           <?php
+             }
+            }
+          ?>
     </table>
     <!-- Modal edit Structure -->
   <div id="modal1" class="modal">
