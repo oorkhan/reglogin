@@ -8,7 +8,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
     $user_id = $_SESSION['id'];
     //SELECT * FROM posts LEFT JOIN post_images ON posts.id = post_images.post_id
-    $sql = "SELECT posts.id,posts.deleted,posts.title,posts.body, GROUP_CONCAT(images.url SEPARATOR ', ')  AS 'images'  from posts left JOIN images on posts.id=images.post_id GROUP BY posts.id ASC";
+    $sql = "SELECT posts.user_id,posts.id,posts.deleted,posts.title,posts.body, GROUP_CONCAT(images.url SEPARATOR ', ')  AS 'images'  from posts left JOIN images on posts.id=images.post_id GROUP BY posts.id ASC";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute(['user_id' => $user_id]);
@@ -28,13 +28,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <th>Title</th><th>Text</th><th>Buttons</th>
     <?php
     foreach($posts as $post){
-           if($post['deleted'] == 0){ ?>
+           if($post['deleted'] == 0 && $post['user_id']==$_SESSION['id']){ ?>
                 <tr>
                   <td><?= $post['title'] ?></td>
                   <td><?= $post['body'] ?></td>
                   <td>
                     <a id="<?= $post['id'] ?>" class="waves-effect waves-light btn modal-trigger blue edit_data" href="#modal1">Edit</a>
-                    <a onclick="return confirm(\'Are you sure?\')" class="waves-effect waves-light btn red delete_btn" href="postDelete.php?id=<?= $post['id'] ?>">Delete</a>
+                    <a class="waves-effect waves-light btn red delete_btn" href="postDelete.php?id=<?= $post['id'] ?>">Delete</a>
                   </td>
                 </tr>
                 <tr>

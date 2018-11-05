@@ -116,6 +116,66 @@
         fullWidth: true,
         indicators: true
       });
+
+      $(document).ready(function(){
+        $(".delete_btn").click(function(){
+          if (!confirm("Do you want to delete")){
+            return false;
+          }
+        });
+      });
+
+      //add comment in post.php
+      $(document).ready(function(){
+ 
+      $('#comment_form').on('submit', function(event){
+        event.preventDefault();
+        var form_data = $(this).serialize();
+        $.ajax({
+        url:"add_comment.php",
+        method:"POST",
+        data:form_data,
+        dataType:"JSON",
+        success:function(data)
+        {
+          if(data.error != '')
+          {
+          $('#comment_form')[0].reset();
+          $('#comment_message').html(data.error);
+          }
+          load_comment();          
+        }
+        })
+      });
+
+      load_comment();
+
+      //display comments post.php
+      function load_comment(post_id)
+      {
+        var post_id = $('#post_id').val();
+        $.ajax({
+          url:"fetch_comments.php",
+          data:{post_id : post_id},
+          method:"POST",
+          success:function(data)
+          {
+            $('#display_comment').html(data);
+          }
+        })
+      }
+      //comment reply fetch_comment.php
+      $(document).on('click', '.reply',function(){
+        var comment_id = $(this).attr("id"); // getting from button reply created by fetch
+        $('#comment_id').val(comment_id); // asign it to hidden input in post.php
+        $('#comment_name').focus();
+      });
+
+
+
+
+ 
+});
     </script>
 
   </body>
