@@ -171,11 +171,28 @@
         $('#comment_name').focus();
       });
 
-
-
-
- 
+      // like button post.php 
 });
+
+      function like(post_id){
+        $.ajax({
+          url : "likepost.php",
+          method : "POST",
+          data : {post_id : post_id},
+          success : function(data){
+             window.location.reload(true);
+            //location.reload(true);
+           /*  if(data!=="no"){
+              $("#likes_of_"+post_id).val(data);
+            }else {
+              console.log(data);
+            } */
+          },
+          error : function(e){
+            console.log(e);
+          }
+        });
+      }
     </script>
 
   </body>

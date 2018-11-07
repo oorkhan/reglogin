@@ -13,6 +13,8 @@
   if(!$post) echo "<h1>Post tapilmadi...</h1>";
   else {
     $images = explode(', ',$post['images']);
+
+    $count_like = count_content_like($pdo, $post_id);
   ?>
 <div class="container">
   <div class="section no-pad-bot" id="index-banner">
@@ -26,6 +28,10 @@
           </div>
             <h5 class=""><?= $post["title"] ?></h5>
             <p><?= $post["body"] ?></p>
+            <div>
+              <button onclick="like(<?= $post_id ?>)" class="btn orange">Like</button>
+              <p>Total likes : <span id="likes_of_<?= $post_id ?>"><?= $count_like ?></span></p>
+            </div>
         </div>
 
     <div class="card-panel">

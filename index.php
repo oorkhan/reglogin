@@ -16,7 +16,8 @@
             <span class="black-text"><?= $post["name"] . " ".$post["surname"] ?></span>
             <h5 class=""><?= $post["title"] ?></h5>
             <p><?= strlen($post["body"]) > 200 ? substr($post["body"],0,200) . "..." : $post["body"] ?></p>
-            <a href="post.php?id=<?= $post["pid"] ?>" class="btn green">Read more..</a>
+            <a href="post.php?id=<?= $post["pid"] ?>" class="btn green">Read more..</a> 
+            <button type="button" name="total_like" id="total_like" class="btn orange">Likes: <?php $count_like =  count_content_like ($pdo, $post["pid"]); echo $count_like ?></button>
         </div>
       <?php endforeach; ?>
     </div>
