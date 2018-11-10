@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Ноя 07 2018 г., 21:51
+-- Время создания: Ноя 10 2018 г., 10:06
 -- Версия сервера: 10.1.35-MariaDB
 -- Версия PHP: 7.2.9
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `new_db`
+-- База данных: `new_db_2`
 --
 
 -- --------------------------------------------------------
@@ -142,7 +142,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `surname`, `username`, `password`, `profile_img`) VALUES
 (0, 'farid', 'agabalayev', 'farid', '$2y$10$PUVrraOc3V76r73mjGIfCeBdL2mtp5gMLvrYdVbxNLsytSwwUt5IS', 'profile.png'),
 (1, 'Orkhan', 'Orujaliyev', 'oorkhan', '', 'profile.png'),
-(3, 'jimbo', 'mercury', 'jimbo', '$2y$10$TeA/Evv8ZuoFg3DYk35e6uwQMxD3QiQWemmzIbL7qUaQQNyNopbNC', 'profile.png'),
+(3, 'jimbo', 'mercury', 'jimbo', '$2y$10$TeA/Evv8ZuoFg3DYk35e6uwQMxD3QiQWemmzIbL7qUaQQNyNopbNC', '1541778682.jpg'),
 (4, 'Ilyas', 'Ilyasov', 'ilyas', '$2y$10$eIKL6TpbVhwFiT/RruZQ/Od7os1kxCe2uRfwVg6yuXSDD2CUkmFJ2', '1541088580.jpeg');
 
 -- --------------------------------------------------------
@@ -162,10 +162,10 @@ CREATE TABLE `user_content_like` (
 --
 
 INSERT INTO `user_content_like` (`user_content_like_id`, `content_id`, `user_id`) VALUES
-(2, 16, 3),
 (3, 16, 0),
 (4, 15, 0),
-(5, 14, 0);
+(5, 14, 0),
+(33, 16, 3);
 
 --
 -- Индексы сохранённых таблиц
@@ -227,7 +227,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT для таблицы `user_content_like`
 --
 ALTER TABLE `user_content_like`
-  MODIFY `user_content_like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_content_like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

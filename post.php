@@ -1,6 +1,7 @@
 <?php require_once("includes/header.php");?>
 
 <?php
+  $user_id = $_SESSION['id'];
 
   if(isset($_GET["id"])){
     $post_id = htmlspecialchars($_GET["id"]);
@@ -29,8 +30,12 @@
             <h5 class=""><?= $post["title"] ?></h5>
             <p><?= $post["body"] ?></p>
             <div>
-              <button onclick="like(<?= $post_id ?>)" class="btn orange">Like</button>
-              <p>Total likes : <span id="likes_of_<?= $post_id ?>"><?= $count_like ?></span></p>
+            <?php if (!user_liked_content($pdo, $post['id'],$user_id)) {?>
+              <button onclick="like(<?= $post_id ?>)" class="btn orange" id="like_btn"><i class="material-icons">thumb_up</i></button>
+            <?php } else {?>
+               <button onclick="dislike(<?= $post_id ?>)" class="btn red" id="dislike_btn"><i class="material-icons">thumb_down</i></button>
+            <?php } ?>
+              <p>Total likes : <span id="likes_of_<?= $post_id ?>"><?= $count_like ? $count_like : 0 ?></span></p>
             </div>
         </div>
 

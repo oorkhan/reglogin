@@ -7,5 +7,14 @@
     return $total_rows;
     }
 
-
+    function user_liked_content($pdo, $content_id, $user_id){
+        $sql = 'SELECT * FROM user_content_like WHERE content_id = :content_id AND user_id = :user_id';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['content_id' => $content_id, 'user_id'=>$user_id]);
+        if(count($stmt->fetchAll())>0){
+            return true;
+        }else {
+            return false;
+        }
+    }
 ?>

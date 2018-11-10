@@ -180,13 +180,46 @@
           method : "POST",
           data : {post_id : post_id},
           success : function(data){
-             window.location.reload(true);
+            var btn = $('#like_btn');
+            btn.attr("onclick" , `dislike(<?= $post_id ?>)`)
+            btn.html('<i class="material-icons">thumb_down</i>');
+            btn.removeClass("orange");
+            btn.addClass("red")
+            //window.location.reload(true);
             //location.reload(true);
-           /*  if(data!=="no"){
-              $("#likes_of_"+post_id).val(data);
+           if(data!=='0'){
+              $("#likes_of_"+post_id).html(data);
             }else {
               console.log(data);
-            } */
+            } 
+          },
+          error : function(e){
+            console.log(e);
+          }
+        });
+      } //end like()
+
+      //start dislike()
+       function dislike(post_id){
+        $.ajax({
+          url : "dislikepost.php",
+          method : "POST",
+          data : {post_id : post_id},
+          success : function(data){
+            var btn = $('#dislike_btn');
+            btn.attr("onclick" , `like(<?= $post_id ?>)`)
+            btn.html('<i class="material-icons">thumb_up</i>');
+            btn.removeClass("red");
+            btn.addClass("orange");
+
+            //console.log(data);
+             //window.location.reload(true);
+            //location.reload(true);
+             if(data!=='0'){
+              $("#likes_of_"+post_id).html(data);
+            }else {
+              console.log(data);
+            } 
           },
           error : function(e){
             console.log(e);
