@@ -181,10 +181,11 @@
           data : {post_id : post_id},
           success : function(data){
             var btn = $('#like_btn');
-            btn.attr("onclick" , `dislike(<?= $post_id ?>)`)
+            btn.attr("onclick" , `dislike(<?= $post_id ?>)`);
             btn.html('<i class="material-icons">thumb_down</i>');
             btn.removeClass("orange");
-            btn.addClass("red")
+            btn.addClass("red");
+            btn.attr("id", "dislike_btn");
             //window.location.reload(true);
             //location.reload(true);
            if(data!=='0'){
@@ -207,10 +208,11 @@
           data : {post_id : post_id},
           success : function(data){
             var btn = $('#dislike_btn');
-            btn.attr("onclick" , `like(<?= $post_id ?>)`)
+            btn.attr("onclick" , `like(<?= $post_id ?>)`);
             btn.html('<i class="material-icons">thumb_up</i>');
             btn.removeClass("red");
             btn.addClass("orange");
+            btn.attr("id", "like_btn");
 
             //console.log(data);
              //window.location.reload(true);
